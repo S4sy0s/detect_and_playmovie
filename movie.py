@@ -53,7 +53,7 @@ class Movie:
             ret, frame = self.cap.read()
             if ret:
                 re_frame = cv2.resize(frame, (self.w, self.h))
-                return (ret, cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))
+                return (ret, cv2.cvtColor(re_frame, cv2.COLOR_BGR2RGB))
             else:
                 return (ret, None)
         except:
