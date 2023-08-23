@@ -31,10 +31,8 @@ class Audio():
         self.p.terminate()
 
 class Movie:
-    def __init__(self, w, h):
+    def __init__(self):
        self._load_url()
-       self.w = w
-       self.h = h
 
     def _load_url(self):
         self.movie_url = list(pathlib.Path('.').glob('data\\movie\\*.mp4')) #dataフォルダにあるjpgファイルを読み込み
@@ -52,8 +50,7 @@ class Movie:
         try:
             ret, frame = self.cap.read()
             if ret:
-                re_frame = cv2.resize(frame, (self.w, self.h))
-                return (ret, cv2.cvtColor(re_frame, cv2.COLOR_BGR2RGB))
+                return (ret, cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))
             else:
                 return (ret, None)
         except:

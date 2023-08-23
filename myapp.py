@@ -114,6 +114,7 @@ class App(tk.Tk):
     def play_movie(self):
         ret, frame = self.movie.get_frame()
         if ret:
+            frame = cv2.resize(frame, (self.w, self.h))
             self.photo2 = PIL.ImageTk.PhotoImage(image = PIL.Image.fromarray(frame))
             self.movie_bg.config(image = self.photo2)
             self.movie_bg.image = self.photo2
