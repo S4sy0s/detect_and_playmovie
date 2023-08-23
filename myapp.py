@@ -25,7 +25,7 @@ class App(tk.Tk):
         self.cap = wc.WebCam(self.w, self.h)
         self.target = tr.Target()
         self.audio = mv.Audio()
-        self.movie = mv.Movie(self.w, self.h)
+        self.movie = mv.Movie()
 
         self.pre_num = len(self.target.imgs)
         
