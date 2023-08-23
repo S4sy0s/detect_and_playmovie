@@ -1,10 +1,10 @@
 # detect_and_playmovie
 ## 環境
-python == 3.10.2
-numpy == 1.25.0
-pillow == 9.4.0
-pathlib == 1.0.1
-pyaudio == 0.2.13
+python == 3.10.2  
+numpy == 1.25.0  
+pillow == 9.4.0  
+pathlib == 1.0.1  
+pyaudio == 0.2.13  
 
 ## 概要
 - Webカメラから、設定した画像を示し認識されると、それに呼応して動画が流れる。
