@@ -1,4 +1,4 @@
-opencv-python == 4.6.0
+opencv-python == 4.6.0.66
 numpy == 1.25.0
 pillow == 9.4.0
 pathlib == 1.0.1

@@ -10,11 +10,8 @@ class Target():
         self.descs = None
         
     def _load_img(self):
-        #my_dir = pathlib.Path(__file__).resolve().parent #自身の場所を取得
         imgs_dir = list(pathlib.Path('.').glob('data\image\*.png')) #dataフォルダにあるjpgファイルを読み込み
-        imgs = []
-        for img_url in imgs_dir:
-            imgs.append(cv2.imread("data\\image\\" + img_url.name, cv2.IMREAD_GRAYSCALE))
+        imgs = [cv2.imread("data\\image\\" + img_url.name, cv2.IMREAD_GRAYSCALE) for img_url in imgs_dir]
         return imgs
     
     def _keypoints(self):
@@ -55,10 +52,7 @@ class Target():
         for i, template in enumerate(self.imgs):
             ### ターゲット画像のリサイズ
             h, w = template.shape[:2]
-            #if (im_w * ratio < w):
             size_w = int(im_w * ratio)
-
-            #if (im_h * ratio < h):
             size_h = int(im_h * ratio)
                 
             temp = self._same_aspect_resize(template, size_w, size_h)
@@ -87,13 +81,6 @@ class Target():
                     color=(0, 255, 0), 
                     thickness = 2, 
                     lineType=cv2.LINE_AA)
-        # cv2.putText(img, text=str(value), org=(200, 100), 
-        #             fontFace = cv2.FONT_HERSHEY_SIMPLEX, 
-        #             fontScale = 1.0, 
-        #             color=(0, 255, 0), 
-        #             thickness = 2, 
-        #             lineType=cv2.LINE_AA)
-        # cv2.putText(img, text = "%", org = (300, 100), fontFace = cv2.FONT_HERHEY_SIMPLEX, fontScale = 1.2, color = (0, 255, 0), thickness = 2, lineType = cv2.LINE_AA)
         return img
 
     def _sift_match(self, img, num, threashold):
@@ -108,7 +95,6 @@ class Target():
         kp1, des1 = self.detector.detectAndCompute(gray, None)
 
         ### マッチング
-        #bf = cv2.BFMatcher(cv2.NORM_HAMMING)
         flann = cv2.DescriptorMatcher_create(cv2.DescriptorMatcher_FLANNBASED)
 
         des2 = self.descs[num]
@@ -136,9 +122,7 @@ class Target():
             detect = True
 
         res = img
-        #### indexと類似度の数値の表示
-        #res = self._draw_siftvalue(img, num)
-
+        
         return res, detect
 
     def detect(self, img):

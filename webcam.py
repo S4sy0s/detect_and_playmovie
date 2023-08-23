@@ -43,4 +43,3 @@ class WebCam():
         print("Release Camera")
         self.cap.release()
         cv2.destroyAllWindows()
-        

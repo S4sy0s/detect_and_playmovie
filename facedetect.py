@@ -7,8 +7,6 @@ class FaceDetect:
         ######################
         ##  face-detection-yunet-2023mar.onnxやyunet_n_dynamic.onnxは使えない
         ##  opencvのバージョンが異なるためかと考えられる.今使っているものは 「opencv == 4.6.0」
-        #directory = os.path.dirname(__file__)
-        #weights = os.path.join(directory, "model\\face-detection-yunet-2023mar.onnx")
         weights = "model\\face_detection_yunet_2022mar.onnx"
         self.face_detector = self._load_model(weights)
 
@@ -46,7 +44,6 @@ class FaceDetect:
         height, width, _ = img.shape
         self.face_detector.setInputSize((width, height))
         _, faces = self.face_detector.detect(img)
-        #faces = faces if faces is not None else []
         if faces is None:
             output = img
         else:
