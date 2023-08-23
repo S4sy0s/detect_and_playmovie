@@ -1,0 +1,5 @@
+opencv-python == 4.6.0
+numpy == 1.25.0
+pillow == 9.4.0
+pathlib == 1.0.1
+PyAudio-0.2.13-cp310-cp310-win_amd64.whl
