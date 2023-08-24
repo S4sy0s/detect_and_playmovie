@@ -27,7 +27,7 @@ class App(tk.Tk):
         self.audio = mv.Audio()
         self.movie = mv.Movie()
 
-        self.pre_num = len(self.target.imgs)
+        self.pre_num = len(self.target.imgs) + 1
         
         ### webカメラ用
         self.main_frame = tk.Frame()
@@ -61,26 +61,26 @@ class App(tk.Tk):
 
             if ret:
                 if number < len(self.target.imgs):
-                    if (self.pre_num == number) or (self.pre_num == len(self.target.imgs)):
+                    if (self.pre_num == len(self.target.imgs)):
                         self.detection_frame = self.detection_frame + 1
+                        self.pre_num = number
+                    elif (self.pre_num == number):
+                        self.detection_frame = self.detection_frame + 1
+                        ### 検出された
+                        if self.detection_frame >= self.max_frame:
+                            self.detected_flag = True
+                            self.audio.open_file(self.pre_num)
+                            self.movie.open_file(self.pre_num)
+                            time.sleep(1.0)
+                            self.changePage(self.movie_frame)
                     else:
                         self.detection_frame = 0
-
-                    self.pre_num = number
-
-                    ### 検出された
-                    if self.detection_frame >= self.max_frame:
-                        self.detected_flag = True
-                        self.audio.open_file(self.pre_num)
-                        self.movie.open_file(self.pre_num)
-                        time.sleep(1.0)
-                        self.changePage(self.movie_frame)
-                        pass
+                        self.pre_num = len(self.target.imgs)
                 else:
                     self.detection_frame = (self.detection_frame - 1) if (self.detection_frame > 0) else 0
                     self.pre_num = len(self.target.imgs)
                 
-                persec = int(self.detection_frame/self.max_frame * 100)
+                persec = int((self.detection_frame/self.max_frame) * 100)
                 font_x = int(self.w * 0.1)
                 font_y = int(self.h * 0.1)
                 cv2.putText(frame, text=str(persec), org=(font_x, font_y), fontFace = cv2.FONT_HERSHEY_SIMPLEX, fontScale = 2.0, color=(0, 255, 0), thickness = 5, lineType=cv2.LINE_AA)
@@ -106,9 +106,11 @@ class App(tk.Tk):
         self.detected_flag = False
         self.detection_frame = 0
         self.pre_num = len(self.target.imgs)
-        self.changePage(self.main_frame)
         self.movie_thread = None
         self.audio_thread = None
+        time.sleep(1)
+        self.changePage(self.main_frame)
+        print("Clear 1")
         self.after(100, self.update())
 
     def play_movie(self):
@@ -122,7 +124,6 @@ class App(tk.Tk):
             self.detected_flag = False
             self.detection_frame = 0
             self.pre_num = len(self.target.imgs)
-            self.changePage(self.main_frame)
+            self.audio.stop()
             self.movie_thread = None
             self.audio_thread = None
-            self.after(100, self.update())
