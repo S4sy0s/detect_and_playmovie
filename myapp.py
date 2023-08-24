@@ -110,7 +110,6 @@ class App(tk.Tk):
         self.audio_thread = None
         time.sleep(1)
         self.changePage(self.main_frame)
-        print("Clear 1")
         self.after(100, self.update())
 
     def play_movie(self):
